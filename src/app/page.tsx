@@ -309,7 +309,7 @@ export default function Home() {
     setShowFinalMessage(false)
     setShowPlantAgainMessage(false)
     setErrorMessage(false)
-    setNailongMessage("Uh oh, semangatnya lagi layu nih... Bantuin aku siram tanaman biar mawarnya mekar lagi, yuk! GAMPANG BANGET KOK! 🌹")
+    setNailongMessage("Haii Anin bantuin aku dan nailong dongg, untuk menyiram bunga mawar ini caranya Anin tekan icon air dan di tahan yaa setelah itu di lepas di capsul warna ijo yaa 🌹")
   }
 
   // Audio Management Functions
