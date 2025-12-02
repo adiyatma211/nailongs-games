@@ -394,8 +394,6 @@ export default function Home() {
       { top: "20%", right: "5%", size: 90, zIndex: 17, rotation: 8, image: "nailong-1" },
       // Special nailong-2.png character
       { top: "70%", right: "20%", size: 85, zIndex: 19, rotation: -12, image: "nailong-2" },
-      // Interactive nailong that hides message on hover
-      
     ]
 
     const handleNailongHover = (hideMessage: boolean) => {
@@ -417,8 +415,6 @@ export default function Home() {
           transform: `rotate(${pos.rotation}deg)`,
           animation: `float-${index} ${3 + index * 0.3}s ease-in-out infinite`,
         }}
-        onMouseEnter={pos.hideMessage ? () => handleNailongHover(true) : undefined}
-        onMouseLeave={pos.hideMessage ? () => handleNailongHover(false) : undefined}
       >
         {pos.emoji ? (
           <div style={{
