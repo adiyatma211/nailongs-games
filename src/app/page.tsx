@@ -75,25 +75,27 @@ export default function Home() {
     // Add water animation effect
     const waterSurface = document.getElementById('waterSurface')
     const wetSoil = document.getElementById('wetSoil')
-    
+
     waterSurface?.classList.add('active')
     wetSoil?.classList.add('active')
-    
+
     // Reset water drops
     const waterDrops = waterSurface?.querySelectorAll('.water-drop')
     waterDrops?.forEach((drop, index) => {
-      drop.style.animation = 'none'
+      const dropElement = drop as HTMLElement
+      dropElement.style.animation = 'none'
       setTimeout(() => {
-        drop.style.animation = `water-drop-fall 2s ease-out ${index * 0.2}s forwards`
+        dropElement.style.animation = `water-drop-fall 2s ease-out ${index * 0.2}s forwards`
       }, 10)
     })
-    
+
     // Reset water ripples
     const waterRipples = waterSurface?.querySelectorAll('.water-ripple')
     waterRipples?.forEach((ripple, index) => {
-      ripple.style.animation = 'none'
+      const rippleElement = ripple as HTMLElement
+      rippleElement.style.animation = 'none'
       setTimeout(() => {
-        ripple.style.animation = `water-ripple-expand 3s ease-out ${0.5 + index * 0.3}s forwards`
+        rippleElement.style.animation = `water-ripple-expand 3s ease-out ${0.5 + index * 0.3}s forwards`
       }, 10)
     })
   }
