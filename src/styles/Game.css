@@ -1,0 +1,1595 @@
+/* Main Game Container */
+.game-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  font-family: 'Fredoka', sans-serif;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Game Background - Enhanced dengan pattern */
+.game-background {
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.3) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),
+    linear-gradient(135deg, #FFF9C4 0%, #FFD700 40%, #FFC107 70%, #FF9800 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Enhanced header dengan dekorasi */
+.game-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+/* Game Title dengan shadow dan gradient */
+.game-title {
+  font-size: 2.675rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, #FF6B6B, #FF4757, #FF6B6B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+  margin-bottom: 0.5rem;
+  text-align: center;
+  animation: title-pulse 3s ease-in-out infinite;
+  position: relative;
+  z-index: 10;
+}
+
+@keyframes title-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Subtitle */
+.game-subtitle {
+  font-size: 0.975rem;
+  color: #5D4037;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Game Content Layout - Clean */
+.game-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 95%;
+  max-width: 600px;
+  position: relative;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 25px;
+  padding: 2.5rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  overflow: hidden; /* Prevent all overflow */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Nailong Character - Enhanced */
+.nailong-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 1.5rem;
+  animation: nailong-bounce 2s ease-in-out infinite;
+}
+
+@keyframes nailong-bounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-10px) rotate(3deg); }
+  75% { transform: translateY(-5px) rotate(-3deg); }
+}
+
+.nailong-character {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3));
+  transition: transform 0.3s ease;
+}
+
+.nailong-character:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Emotion indicators */
+.nailong-emotion {
+  position: absolute;
+  top: -15px;
+  right: -5px;
+  width: 40px;
+  height: 40px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.375rem;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+  animation: emotion-bounce 1s ease-in-out infinite;
+}
+
+@keyframes emotion-bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* Plant Container - Clean Container */
+.plant-container {
+  position: relative;
+  width: 280px; /* Smaller width to fit in container */
+  height: 400px; /* Adjusted height */
+  margin: 1rem auto 2rem; /* Center horizontally with auto margins */
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(139, 69, 19, 0.3);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Mobile adjustment for plant container */
+@media (max-width: 480px) {
+  .plant-container {
+    width: 260px; /* Smaller for mobile */
+    height: 380px; /* Adjusted for mobile */
+    margin: 0.5rem auto 1rem; /* Center and reduce margins for mobile */
+  }
+}
+
+/* No Ground Design - Clean Container */
+.flower-pot {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px; /* Smaller for perfect soil fit */
+  position: relative;
+  box-shadow: none;
+  overflow: visible;
+  transform: rotateY(0deg);
+  transition: all 0.6s ease;
+}
+
+/* Soil/Ground Media Layer */
+.soil-media {
+  position: absolute;
+  bottom: 0;
+  left: 0; /* Full width */
+  right: 0; /* Full width */
+  height: 80px; /* Increased soil height */
+  z-index: 10; /* Below plants, above pot */
+  background: linear-gradient(180deg, 
+    #8B4513 0%,    /* Dark brown top */
+    #A0522D 30%,   /* Medium brown */
+    #6B3410 60%,   /* Darker brown */
+    #4A2C17 100%   /* Very dark brown bottom */
+  );
+  border-radius: 0 0 10px 10px; /* Match flower-pot inner radius */
+  border: none; /* Remove border for full width */
+  box-shadow: 
+    inset 0 2px 5px rgba(0,0,0,0.2),
+    0 -5px 15px rgba(0,0,0,0.3);
+  opacity: 0.9;
+  transition: all 0.4s ease;
+}
+
+/* Soil texture effect */
+.soil-media::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: 
+    radial-gradient(ellipse at 20% 20%, rgba(255,255,255,0.1) 0%, transparent 20%),
+    radial-gradient(ellipse at 60% 40%, rgba(255,255,255,0.05) 0%, transparent 15%),
+    radial-gradient(ellipse at 40% 60%, rgba(255,255,255,0.08) 0%, transparent 25%),
+    radial-gradient(ellipse at 80% 30%, rgba(255,255,255,0.03) 0%, transparent 18%);
+  border-radius: inherit;
+  opacity: 0.7;
+}
+
+/* Wet soil effect when watering */
+.soil-media.wet {
+  background: linear-gradient(180deg, 
+    #654321 0%,    /* Darker wet soil */
+    #7A5230 30%,   /* Medium wet soil */
+    #543210 60%,   /* Very dark wet soil */
+    #3E2723 100%   /* Extremely dark wet soil bottom */
+  );
+  box-shadow: 
+    inset 0 3px 8px rgba(0,0,0,0.4),
+    0 -5px 15px rgba(0,0,0,0.4),
+    inset 0 -2px 10px rgba(33,150,243,0.2);
+  opacity: 1;
+}
+
+/* Wet soil shine effect */
+.soil-media.wet::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20%;
+  background: linear-gradient(180deg, 
+    rgba(33,150,243,0.3) 0%, 
+    transparent 100%
+  );
+  border-radius: 10px 10px 0 0; /* Match soil border radius */
+  opacity: 0.6;
+  animation: wet-shimmer 3s ease-in-out infinite;
+}
+
+@keyframes wet-shimmer {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+/* No Ground Design - Transparent Container */
+.flower-pot {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  position: relative;
+  box-shadow: none;
+  overflow: visible;
+  transform: rotateY(0deg);
+  transition: all 0.6s ease;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Plant stage container - True Center Container */
+.plant-stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%; /* Full container height */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* Align to bottom to appear above soil */
+  z-index: 15; /* Above soil */
+  pointer-events: none;
+}
+
+/* Reset all positioning conflicts */
+.plant-seed,
+.plant-sprout,
+.plant-bud,
+.plant-bloom {
+  position: absolute !important;
+  display: none !important; /* Hidden by default */
+  justify-content: center !important;
+  align-items: flex-end !important; /* Align to bottom to appear above soil */
+  margin: 0 auto !important;
+  width: 100% !important;
+  transform: none !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important; /* Position at bottom of container */
+  top: auto !important;
+  z-index: 15 !important;
+  opacity: 0; /* Start invisible */
+  transition: all 0.5s ease;
+}
+
+/* Show plant stages when active */
+.plant-seed.active,
+.plant-sprout.active,
+.plant-bud.active,
+.plant-bloom.active {
+  display: flex !important;
+  opacity: 1 !important;
+  transform: scale(1) translateY(0) !important;
+}
+
+
+
+/* Message Container - Enhanced */
+.message-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 2rem;
+  min-height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 
+    0 8px 25px rgba(0,0,0,0.1),
+    0 3px 10px rgba(0,0,0,0.05);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  position: relative;
+  animation: message-float 3s ease-in-out infinite;
+}
+
+@keyframes message-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.message-container::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid rgba(255, 255, 255, 0.95);
+}
+
+.nailong-message {
+  font-size: 1.075rem;
+  color: #333;
+  text-align: center;
+  line-height: 1.5;
+  font-weight: 500;
+  position: relative;
+  z-index: 1;
+}
+
+/* Progress indicator */
+.water-progress-indicator {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 1rem;
+}
+
+.water-drop {
+  width: 15px;
+  height: 15px;
+  background: #E3F2FD;
+  border-radius: 50%;
+  border: 2px solid #90CAF9;
+  transition: all 0.3s ease;
+}
+
+.water-drop.filled {
+  background: #2196F3;
+  border-color: #1976D2;
+  transform: scale(1.1);
+}
+
+/* Water Button Container - Enhanced */
+.water-button-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.water-button {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #64B5F6, #2196F3, #1976D2);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 
+    0 8px 15px rgba(33, 150, 243, 0.4),
+    0 3px 6px rgba(33, 150, 243, 0.3),
+    inset 0 1px 3px rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.water-button::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: rotate(0deg);
+  transition: all 0.6s ease;
+}
+
+.water-button:hover {
+  transform: scale(1.1) rotate(-3deg);
+  box-shadow: 
+    0 12px 20px rgba(33, 150, 243, 0.5),
+    0 5px 10px rgba(33, 150, 243, 0.4);
+}
+
+.water-button:active {
+  transform: scale(0.95);
+  box-shadow: 
+    0 4px 8px rgba(33, 150, 243, 0.3),
+    inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.water-button.watering {
+  animation: water-pulse 0.5s ease-in-out infinite;
+}
+
+@keyframes water-pulse {
+  0%, 100% { 
+    transform: scale(1); 
+    box-shadow: 
+      0 8px 15px rgba(33, 150, 243, 0.4),
+      0 3px 6px rgba(33, 150, 243, 0.3);
+  }
+  50% { 
+    transform: scale(1.05); 
+    box-shadow: 
+      0 12px 25px rgba(33, 150, 243, 0.6),
+      0 5px 10px rgba(33, 150, 243, 0.5);
+  }
+}
+
+.water-icon {
+  font-size: 2.375rem;
+  z-index: 2;
+  position: relative;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+/* Water splash effect */
+.water-splash {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.water-splash::before,
+.water-splash::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(33, 150, 243, 0.7);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.water-splash.active::before {
+  animation: splash-effect 0.6s ease-out forwards;
+}
+
+.water-splash.active::after {
+  animation: splash-effect 0.6s ease-out 0.1s forwards;
+}
+
+@keyframes splash-effect {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(3);
+  }
+}
+
+/* Water Progress - Enhanced */
+.water-progress {
+  width: 100%;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.progress-container {
+  width: 100%;
+  height: 30px;
+  background: linear-gradient(145deg, #E0E0E0, #BDBDBD);
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 
+    inset 0 2px 5px rgba(0,0,0,0.1),
+    0 2px 5px rgba(0,0,0,0.05);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: linear-gradient(90deg, #FFE0B2, #FFCC80);
+  border-radius: 15px;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, 
+    #26C6DA 0%, 
+    #00ACC1 50%, 
+    #0097A7 100%
+  );
+  border-radius: 15px;
+  transition: width 0.1s ease-out;
+  position: relative;
+  box-shadow: 
+    inset 0 2px 5px rgba(255,255,255,0.3),
+    0 0 10px rgba(38, 198, 218, 0.3);
+}
+
+.progress-zones {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5px;
+  box-sizing: border-box;
+}
+
+
+
+@keyframes safe-zone-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.6; }
+}
+
+.danger-zones {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.danger-zone {
+  flex: 1;
+  background: linear-gradient(90deg, 
+    rgba(244, 67, 54, 0.2) 0%, 
+    rgba(244, 67, 54, 0.4) 50%, 
+    rgba(244, 67, 54, 0.2) 100%
+  );
+  border-radius: 15px;
+}
+
+/* Progress indicator dots */
+.progress-indicators {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  padding: 0 10px;
+}
+
+.progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #E0E0E0;
+  transition: all 0.3s ease;
+}
+
+.progress-dot.active {
+  background: #4CAF50;
+  transform: scale(1.3);
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+}
+
+/* Magical Plant Stages - Maximum Size Design */
+.plant-seed,
+.plant-sprout,
+.plant-bud,
+.plant-bloom {
+  position: absolute !important;
+  display: none !important; /* Hidden by default */
+  justify-content: center !important;
+  align-items: flex-end !important; /* Align to bottom to appear above soil */
+  z-index: 15;
+  filter: 
+    drop-shadow(0 15px 40px rgba(0,0,0,0.4)),
+    drop-shadow(0 0 30px rgba(255,215,0,0.3));
+  transition: all 0.4s ease;
+  cursor: pointer;
+  opacity: 0; /* Start invisible */
+  transform: scale(0.8) translateY(0); /* Start smaller and positioned at bottom */
+  left: 0;
+  right: 0;
+  top: auto;
+  bottom: 0; /* Position at bottom of container */
+}
+
+.plant-seed {
+  width: 220px;
+  height: 120px; /* Smaller height to sit on soil */
+  animation: none; /* Remove initial animation */
+}
+
+.plant-sprout {
+  width: 240px;
+  height: 180px; /* Medium height to grow from soil */
+  animation: none; /* Remove initial animation */
+}
+
+.plant-bud {
+  width: 260px;
+  height: 220px; /* Taller height for bud stage */
+  animation: none; /* Remove initial animation */
+}
+
+.plant-bloom {
+  width: 280px;
+  height: 260px; /* Full height for bloom stage */
+  animation: none; /* Remove initial animation */
+}
+
+/* Active states for growth stages */
+.plant-seed.active {
+  display: flex !important;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  animation: seed-magical-float 4s ease-in-out infinite;
+  transition: all 0.6s ease-out;
+}
+
+.plant-sprout.active {
+  display: flex !important;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  animation: sprout-mystic-sway 5s ease-in-out infinite;
+  transition: all 0.8s ease-out;
+}
+
+.plant-bud.active {
+  display: flex !important;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  animation: bud-glowing-pulse 3.5s ease-in-out infinite;
+  transition: all 1s ease-out;
+}
+
+.plant-bloom.active {
+  display: flex !important;
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  animation: bloom-ethereal-shimmer 6s ease-in-out infinite;
+  transition: all 1.2s ease-out;
+}
+
+/* Entrance animations for each stage */
+@keyframes seed-entrance {
+  0% {
+    opacity: 0;
+    transform: scale(0) translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes sprout-entrance {
+  0% {
+    opacity: 0;
+    transform: scale(0) translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes bud-entrance {
+  0% {
+    opacity: 0;
+    transform: scale(0) translateY(50px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes bloom-entrance {
+  0% {
+    opacity: 0;
+    transform: scale(0) translateY(60px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Plant Growth Icon Styles - Simple Center Fix */
+.seed-icon,
+.sprout-icon,
+.rose-icon-medium,
+.rose-icon-bloom,
+.plant-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  filter: 
+    drop-shadow(0 15px 40px rgba(0,0,0,0.4));
+  transition: all 0.3s ease;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Stage 1 - Seed Icon - Fixed Center */
+.seed-icon {
+  font-size: 120px;
+  animation: seed-gentle-float 4s ease-in-out infinite;
+}
+
+/* Stage 2 - Sprout Icon - Fixed Center */
+.sprout-icon {
+  font-size: 140px;
+  animation: sprout-mystic-sway 5s ease-in-out infinite;
+}
+
+/* Stage 3 - Rose Bud Icon - Fixed Center */
+.rose-icon-medium {
+  font-size: 160px;
+  animation: rose-glowing-pulse 3.5s ease-in-out infinite;
+}
+
+/* Stage 4 - Blooming Rose Icon - Fixed Center */
+.rose-icon-bloom {
+  font-size: 180px;
+  animation: rose-ethereal-shimmer 6s ease-in-out infinite;
+}
+
+/* Interactive hover effects for all growth icons */
+.seed-icon:hover,
+.sprout-icon:hover,
+.rose-icon-medium:hover,
+.rose-icon-bloom:hover {
+  transform: scale(1.15) rotate(5deg);
+  filter: 
+    drop-shadow(0 20px 50px rgba(0,0,0,0.45));
+}
+
+/* Plant Growth Icon Animations */
+@keyframes seed-gentle-float {
+  0% { transform: translateY(0) rotate(0deg) scale(1); }
+  25% { transform: translateY(-8px) rotate(1deg) scale(1.02); }
+  50% { transform: translateY(-12px) rotate(-1deg) scale(1.04); }
+  75% { transform: translateY(-8px) rotate(1deg) scale(1.02); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+@keyframes sprout-mystic-sway {
+  0% { transform: rotate(-2deg) translateY(0); }
+  25% { transform: rotate(1deg) translateY(-6px); }
+  50% { transform: rotate(-1deg) translateY(-10px); }
+  75% { transform: rotate(2deg) translateY(-6px); }
+  100% { transform: rotate(-2deg) translateY(0); }
+}
+
+@keyframes rose-glowing-pulse {
+  0% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+  25% { transform: scale(1.08) rotate(2deg); filter: brightness(1.2); }
+  50% { transform: scale(1.05) rotate(-1deg); filter: brightness(1.3); }
+  75% { transform: scale(1.08) rotate(1deg); filter: brightness(1.2); }
+  100% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+}
+
+@keyframes rose-ethereal-shimmer {
+  0% { transform: scale(1) rotate(0deg) translateY(0); filter: brightness(1) hue-rotate(0deg); }
+  20% { transform: scale(1.05) rotate(1deg) translateY(-8px); filter: brightness(1.15) hue-rotate(15deg); }
+  40% { transform: scale(1.02) rotate(-1deg) translateY(-4px); filter: brightness(1.25) hue-rotate(-10deg); }
+  60% { transform: scale(1.08) rotate(2deg) translateY(-12px); filter: brightness(1.35) hue-rotate(25deg); }
+  80% { transform: scale(1.03) rotate(-1deg) translateY(-6px); filter: brightness(1.2) hue-rotate(-15deg); }
+  100% { transform: scale(1) rotate(0deg) translateY(0); filter: brightness(1) hue-rotate(0deg); }
+}
+
+@keyframes seed-magical-float {
+  0% { transform: translateY(0) rotate(0deg) scale(1); }
+  25% { transform: translateY(-8px) rotate(2deg) scale(1.05); }
+  50% { transform: translateY(-12px) rotate(-2deg) scale(1.1); }
+  75% { transform: translateY(-8px) rotate(2deg) scale(1.05); }
+  100% { transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+@keyframes sprout-mystic-sway {
+  0% { transform: rotate(-3deg) translateY(0); }
+  25% { transform: rotate(2deg) translateY(-3px); }
+  50% { transform: rotate(-2deg) translateY(-6px); }
+  75% { transform: rotate(3deg) translateY(-3px); }
+  100% { transform: rotate(-3deg) translateY(0); }
+}
+
+@keyframes bud-glowing-pulse {
+  0% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+  25% { transform: scale(1.08) rotate(2deg); filter: brightness(1.2); }
+  50% { transform: scale(1.05) rotate(-1deg); filter: brightness(1.3); }
+  75% { transform: scale(1.08) rotate(1deg); filter: brightness(1.2); }
+  100% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+}
+
+@keyframes bloom-ethereal-shimmer {
+  0% { transform: scale(1) rotate(0deg) translateY(0); filter: brightness(1) hue-rotate(0deg); }
+  20% { transform: scale(1.05) rotate(1deg) translateY(-4px); filter: brightness(1.15) hue-rotate(10deg); }
+  40% { transform: scale(1.02) rotate(-1deg) translateY(-2px); filter: brightness(1.25) hue-rotate(-5deg); }
+  60% { transform: scale(1.08) rotate(2deg) translateY(-6px); filter: brightness(1.35) hue-rotate(15deg); }
+  80% { transform: scale(1.03) rotate(-1deg) translateY(-3px); filter: brightness(1.2) hue-rotate(-10deg); }
+  100% { transform: scale(1) rotate(0deg) translateY(0); filter: brightness(1) hue-rotate(0deg); }
+}
+
+/* Remove these old plant styles as they conflict with the new ones */
+
+
+
+.plant-bloom {
+  width: 90px;
+  height: 90px;
+  background: 
+    radial-gradient(circle at 30% 30%, #FCE4EC, #F48FB1),
+    radial-gradient(circle at 70% 70%, #E1BEE7, #BA68C8),
+    radial-gradient(circle at 50% 50%, #F8BBD0, #E91E63);
+  background-size: 100% 100%;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 55px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 
+    0 10px 30px rgba(233, 30, 99, 0.4),
+    0 0 20px rgba(233, 30, 99, 0.3),
+    inset 0 3px 10px rgba(255,255,255,0.3);
+  animation: bloom-glow 3s ease-in-out infinite;
+}
+
+@keyframes bloom-glow {
+  0%, 100% { 
+    transform: translateX(-50%) scale(1); 
+    box-shadow: 
+      0 10px 30px rgba(220, 20, 60, 0.4),
+      0 0 20px rgba(255, 20, 147, 0.3),
+      inset 0 3px 10px rgba(255,255,255,0.3);
+  }
+  50% { 
+    transform: translateX(-50%) scale(1.05); 
+    box-shadow: 
+      0 15px 40px rgba(220, 20, 60, 0.6),
+      0 0 30px rgba(255, 20, 147, 0.5),
+      inset 0 5px 15px rgba(255,255,255,0.4);
+  }
+}
+
+/* Real Rose Flower Shape */
+.plant-bloom {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  animation: bloom-glow 3s ease-in-out infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.plant-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.2));
+  transition: transform 0.3s ease;
+}
+
+.plant-image:hover {
+  transform: scale(1.05) rotate(3deg);
+}
+
+.rose-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 15px rgba(220, 20, 60, 0.3));
+  transition: transform 0.3s ease;
+}
+
+.rose-image:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Rose container with multiple petals */
+.rose-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  bottom: 55px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Individual rose petals */
+.rose-petal {
+  position: absolute;
+  width: 40px;
+  height: 55px;
+  background: linear-gradient(135deg, #FFB6C1, #FF69B4);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  transform-origin: 50% 100%;
+  box-shadow: 
+    0 3px 8px rgba(255, 20, 147, 0.3),
+    inset 0 1px 3px rgba(255,255,255,0.4);
+}
+
+.rose-petal-1 {
+  top: 5px;
+  left: 30px;
+  transform: rotate(0deg);
+}
+
+.rose-petal-2 {
+  top: 20px;
+  left: 15px;
+  transform: rotate(72deg);
+}
+
+.rose-petal-3 {
+  top: 45px;
+  left: 20px;
+  transform: rotate(144deg);
+}
+
+.rose-petal-4 {
+  top: 45px;
+  right: 20px;
+  transform: rotate(216deg);
+}
+
+.rose-petal-5 {
+  top: 20px;
+  right: 15px;
+  transform: rotate(288deg);
+}
+
+.rose-petal-6 {
+  top: 5px;
+  right: 30px;
+  transform: rotate(360deg);
+}
+
+/* Rose center */
+.rose-center {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  background: radial-gradient(circle, #DC143C, #8B0000);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 
+    0 3px 10px rgba(139, 0, 0, 0.3),
+    inset 0 2px 4px rgba(255,255,255,0.2);
+  z-index: 10;
+}
+
+
+
+/* Enhanced Confetti Effect */
+.confetti {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  animation: confetti-fall 4s ease-out forwards;
+  z-index: 100;
+}
+
+.confetti.star {
+  border-radius: 0;
+  animation: confetti-star 4s ease-out forwards;
+}
+
+.confetti.circle {
+  border-radius: 50%;
+  animation: confetti-fall 4s ease-out forwards;
+}
+
+.confetti.square {
+  border-radius: 0;
+  animation: confetti-rotate 4s ease-out forwards;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-30px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@keyframes confetti-star {
+  0% {
+    transform: translateY(-30px) rotate(0deg) scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(30px) rotate(360deg) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120px) rotate(720deg) scale(0.8);
+    opacity: 0;
+  }
+}
+
+@keyframes confetti-rotate {
+  0% {
+    transform: translateY(-30px) rotate(0deg) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120px) rotate(1080deg) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Enhanced Ending Screen */
+.ending-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.ending-content {
+  background: linear-gradient(145deg, #FFFFFF, #F5F5F5);
+  border-radius: 25px;
+  padding: 2.5rem;
+  text-align: center;
+  max-width: 350px;
+  font-family: 'Fredoka', sans-serif;
+  box-shadow: 
+    0 15px 35px rgba(0,0,0,0.2),
+    0 5px 15px rgba(0,0,0,0.1),
+    inset 0 2px 5px rgba(255,255,255,0.5);
+  border: 1px solid rgba(255,255,255,0.3);
+  animation: ending-bounce 0.5s ease-out;
+}
+
+@keyframes ending-bounce {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.ending-title {
+  font-size: 1.875rem;
+  color: #4CAF50;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, #4CAF50, #66BB6A, #4CAF50);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: title-glow 2s ease-in-out infinite;
+}
+
+@keyframes title-glow {
+  0%, 100% { text-shadow: 0 0 10px rgba(76, 175, 80, 0.5); }
+  50% { text-shadow: 0 0 20px rgba(76, 175, 80, 0.8); }
+}
+
+.ending-message {
+  font-size: 1.075rem;
+  color: #333;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.ending-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.ending-button {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 15px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 0.975rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  min-width: 120px;
+  box-shadow: 
+    0 4px 15px rgba(0,0,0,0.1),
+    0 2px 5px rgba(0,0,0,0.05);
+}
+
+.ending-button::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: rotate(0deg);
+  transition: all 0.6s ease;
+}
+
+.ending-button:hover::before {
+  transform: rotate(180deg);
+}
+
+.ending-button:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 
+    0 8px 25px rgba(0,0,0,0.15),
+    0 4px 10px rgba(0,0,0,0.1);
+}
+
+.ending-button:active {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 
+    0 4px 15px rgba(0,0,0,0.1),
+    0 2px 5px rgba(0,0,0,0.05);
+}
+
+.yes-button {
+  background: linear-gradient(145deg, #66BB6A, #4CAF50, #388E3C);
+  color: white;
+}
+
+.rest-button {
+  background: linear-gradient(145deg, #BDBDBD, #9E9E9E, #757575);
+  color: white;
+}
+
+/* Enhanced Notification */
+.notification {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(145deg, #263238, #37474F);
+  color: white;
+  padding: 1.2rem 2rem;
+  border-radius: 15px;
+  font-size: 0.975rem;
+  z-index: 2000;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 500;
+  box-shadow: 
+    0 10px 30px rgba(0,0,0,0.3),
+    0 5px 15px rgba(0,0,0,0.2),
+    inset 0 2px 5px rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  animation: notification-pop 0.3s ease-out;
+}
+
+@keyframes notification-pop {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .game-title {
+    font-size: 1.675rem;
+  }
+  
+  .game-content {
+    width: 95%;
+    padding: 1.2rem;
+    max-height: calc(100vh - 80px);
+    overflow: hidden; /* Prevent all overflow */
+  }
+  
+  .nailong-container {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 1rem;
+  }
+  
+  .nailong-character {
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2));
+  }
+  
+  .floating-character {
+    filter: drop-shadow(0 6px 15px rgba(0,0,0,0.3));
+  }
+  
+  .message-container {
+    margin-bottom: 1rem;
+    padding: 0.8rem 1rem;
+    min-height: 60px;
+  }
+  
+  .water-button-container {
+    margin-top: 0.3rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  .water-button {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 0.8rem;
+  }
+  
+  .water-icon {
+    font-size: 1.375rem;
+  }
+  
+  .water-progress {
+    margin-bottom: 0.5rem;
+  }
+  
+  .plant-seed {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .plant-sprout {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .plant-bud {
+    width: 220px;
+    height: 220px;
+  }
+  
+  .plant-bloom {
+    width: 240px;
+    height: 240px;
+  }
+
+  /* Mobile growth icon sizes - Perfect center */
+  .seed-icon {
+    font-size: 80px;
+  }
+  
+  .sprout-icon {
+    font-size: 100px;
+  }
+  
+  .rose-icon-medium {
+    font-size: 120px;
+  }
+  
+  .rose-icon-bloom {
+    font-size: 140px;
+  }
+  
+  /* Adjust floating character sizes for mobile */
+  .floating-nailong:nth-child(1) { width: 60px; height: 60px; }
+  .floating-nailong:nth-child(2) { width: 50px; height: 50px; }
+  .floating-nailong:nth-child(3) { width: 55px; height: 55px; }
+  .floating-nailong:nth-child(4) { display: none; }
+  .floating-nailong:nth-child(5) { width: 65px; height: 65px; }
+  .floating-nailong:nth-child(6) { width: 45px; height: 45px; }
+  .floating-nailong:nth-child(7) { display: none; }
+}
+
+/* iPhone 12 Pro Max Specific Fix */
+@media only screen 
+  and (device-width: 428px) 
+  and (device-height: 926px) 
+  and (-webkit-device-pixel-ratio: 3) {
+  
+  html, body {
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .game-container {
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    width: 100vw !important;
+    max-width: 100vw !important;
+  }
+  
+  .game-background {
+    padding: 1rem;
+    justify-content: flex-start;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    width: 100% !important;
+  }
+  
+  .game-header {
+    margin-bottom: 1rem;
+  }
+  
+  .game-title {
+    font-size: 2.075rem;
+    margin-bottom: 0.3rem;
+  }
+  
+  .game-subtitle {
+    font-size: 0.875rem;
+  }
+  
+  .game-content {
+    width: 95%;
+    max-width: 380px;
+    padding: 1.2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: auto;
+    max-height: calc(100vh - 200px);
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 auto;
+  }
+  
+  .nailong-container {
+    width: 180px;
+    height: 180px;
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+  }
+  
+  .plant-container {
+    width: 260px;
+    height: 400px;
+    margin: 2rem auto 2rem 1rem; /* Menurunkan ke bawah untuk iPhone 12 Pro */
+    position: relative;
+    overflow-x: hidden !important;
+  }
+  
+  .message-container {
+    margin-bottom: 1rem;
+    padding: 0.8rem 1rem;
+    min-height: 60px;
+    flex-shrink: 0;
+  }
+  
+  .water-button-container {
+    margin-top: 0rem;
+    margin-bottom: 0.5rem;
+    flex-shrink: 0;
+  }
+  
+  .water-button {
+    width: 65px;
+    height: 65px;
+    margin-bottom: 0.8rem;
+  }
+  
+  .water-progress {
+    margin-bottom: 0.3rem;
+  }
+  
+  .progress-container {
+    height: 25px;
+  }
+  
+  .progress-indicators {
+    margin-top: 0.3rem;
+  }
+  
+  /* Reduce floating characters for better performance */
+  .floating-nailong:nth-child(1) { width: 70px; height: 70px; }
+  .floating-nailong:nth-child(2) { width: 60px; height: 60px; }
+  .floating-nailong:nth-child(3) { width: 65px; height: 65px; }
+  .floating-nailong:nth-child(4) { display: none; }
+  .floating-nailong:nth-child(5) { width: 75px; height: 75px; }
+  .floating-nailong:nth-child(6) { width: 55px; height: 55px; }
+  .floating-nailong:nth-child(7) { display: none; }
+}
+
+/* Large iPhones and iPad Mini Fix */
+@media only screen 
+  and (min-width: 414px) 
+  and (max-width: 768px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+  
+  .game-content {
+    max-height: calc(100vh - 120px);
+    padding: 1.5rem;
+  }
+  
+  .water-button-container {
+    margin-top: 0rem;
+    margin-bottom: 1rem;
+  }
+  
+  .nailong-container {
+    margin-bottom: 1rem;
+  }
+  
+  .plant-container {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Floating Nailong Characters */
+.floating-nailong {
+  animation: gentle-float 3s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+
+.floating-nailong:hover {
+  transform: rotate(0deg) scale(1.1);
+}
+
+.floating-character {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 25px rgba(0,0,0,0.3));
+  transition: transform 0.3s ease;
+}
+
+/* Individual floating animations */
+@keyframes float-0 {
+  0%, 100% { transform: rotate(-15deg) translateY(0px); }
+  50% { transform: rotate(-12deg) translateY(-25px); }
+}
+
+@keyframes float-1 {
+  0%, 100% { transform: rotate(20deg) translateY(0px); }
+  50% { transform: rotate(25deg) translateY(-20px); }
+}
+
+@keyframes float-2 {
+  0%, 100% { transform: rotate(-10deg) translateY(0px); }
+  50% { transform: rotate(-5deg) translateY(-22px); }
+}
+
+@keyframes float-3 {
+  0%, 100% { transform: rotate(15deg) translateY(0px); }
+  50% { transform: rotate(18deg) translateY(-18px); }
+}
+
+@keyframes float-4 {
+  0%, 100% { transform: rotate(-5deg) translateY(0px); }
+  50% { transform: rotate(0deg) translateY(-30px); }
+}
+
+@keyframes float-5 {
+  0%, 100% { transform: rotate(25deg) translateY(0px); }
+  50% { transform: rotate(30deg) translateY(-15px); }
+}
+
+@keyframes float-6 {
+  0%, 100% { transform: rotate(-20deg) translateY(0px); }
+  50% { transform: rotate(-15deg) translateY(-28px); }
+}
+
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* SUPER EASY safe zone - hampir tidak mungkin gagal */
+.safe-zone {
+  position: absolute;
+  height: 100%;
+  width: 80%; /* Super lebar! Dari 60% ke 80% */
+  left: 10%; /* Centered the safe zone */
+  background: linear-gradient(90deg, 
+    rgba(76, 175, 80, 0.6) 0%, 
+    rgba(76, 175, 80, 0.8) 50%, 
+    rgba(76, 175, 80, 0.6) 100%
+  );
+  border-radius: 15px;
+  animation: safe-zone-pulse 1.5s ease-in-out infinite;
+  box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+}
+
+/* Danger zones sangat kecil */
+.danger-zone {
+  flex: 1;
+  background: linear-gradient(90deg, 
+    rgba(244, 67, 54, 0.08) 0%, 
+    rgba(244, 67, 54, 0.12) 50%, 
+    rgba(244, 67, 54, 0.08) 100%
+  );
+  border-radius: 15px;
+}
+
+
+
+/* Touch device optimizations */
+@media (hover: none) {
+  .water-button:hover {
+    transform: none;
+  }
+  
+  .ending-button:hover {
+    transform: none;
+  }
+  
+  .floating-nailong:hover {
+    transform: none;
+  }
+}

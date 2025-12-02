@@ -1,65 +1,360 @@
-import Image from "next/image";
+'use client'
+
+import { useState, useEffect } from 'react'
+import '../styles/Game.css'
 
 export default function Home() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+  const [gameStage, setGameStage] = useState(0) // 0: empty, 1: seed, 2: sprout, 3: bud, 4: bloom
+  const [waterProgress, setWaterProgress] = useState(0)
+  const [isWatering, setIsWatering] = useState(false)
+  const [nailongMessage, setNailongMessage] = useState("Uh oh, semangatnya lagi layu nih... Bantuin aku siram tanaman biar mawarnya mekar lagi, yuk! GAMPANG BANGET KOK! 🌹")
+  const [showEnding, setShowEnding] = useState(false)
+  const [notification, setNotification] = useState("")
+  const [waterLevel, setWaterLevel] = useState(0)
+  
+  // Watering mechanic: Press and hold
+  useEffect(() => {
+    if (isWatering) {
+      const interval = setInterval(() => {
+        setWaterProgress((prev) => {
+          if (prev >= 100) {
+            return 100
+          }
+          return prev + 2
+        })
+      }, 50)
+      
+      return () => clearInterval(interval)
+    }
+  }, [isWatering])
+  
+  const handleWaterStart = () => {
+    setIsWatering(true)
+    setWaterProgress(0)
+    
+    // Create wet soil effect
+    const soilMedia = document.getElementById('soilMedia')
+    if (soilMedia) {
+      soilMedia.classList.add('wet')
+    }
+    
+    // Add water animation effect
+    const waterSurface = document.getElementById('waterSurface')
+    const wetSoil = document.getElementById('wetSoil')
+    
+    waterSurface?.classList.add('active')
+    wetSoil?.classList.add('active')
+    
+    // Reset water drops
+    const waterDrops = waterSurface?.querySelectorAll('.water-drop')
+    waterDrops?.forEach((drop, index) => {
+      drop.style.animation = 'none'
+      setTimeout(() => {
+        drop.style.animation = `water-drop-fall 2s ease-out ${index * 0.2}s forwards`
+      }, 10)
+    })
+    
+    // Reset water ripples
+    const waterRipples = waterSurface?.querySelectorAll('.water-ripple')
+    waterRipples?.forEach((ripple, index) => {
+      ripple.style.animation = 'none'
+      setTimeout(() => {
+        ripple.style.animation = `water-ripple-expand 3s ease-out ${0.5 + index * 0.3}s forwards`
+      }, 10)
+    })
+  }
+  
+  const handleWaterEnd = () => {
+    setIsWatering(false)
+    
+    // Remove wet soil effect after delay
+    setTimeout(() => {
+      const soilMedia = document.getElementById('soilMedia')
+      if (soilMedia) {
+        soilMedia.classList.remove('wet')
+      }
+    }, 2000)
+    
+    // Remove water animation effects after delay
+    setTimeout(() => {
+      const waterSurface = document.getElementById('waterSurface')
+      const wetSoil = document.getElementById('wetSoil')
+      
+      waterSurface?.classList.remove('active')
+      wetSoil?.classList.remove('active')
+    }, 2000)
+    
+    // SUPER EASY MODE - hampir selalu berhasil (10-90% safe zone)
+    // Ini sangat mudah! Hanya gagal jika terlalu cepat atau terlalu lambat
+    if (waterProgress >= 10 && waterProgress <= 90) {
+      // Success!
+      const newWaterLevel = waterLevel + 1
+      setWaterLevel(newWaterLevel)
+      
+      // Check for stage progression - persyaratan jauh lebih mudah
+      if (newWaterLevel === 2 && gameStage === 0) {
+        // Move to seed stage - dari 3 menjadi 2!
+        setGameStage(1)
+        setNailongMessage("Yey! Biji mawar udah muncul dari tanah! Gampang banget kan? 😉")
+      } else if (newWaterLevel === 4 && gameStage === 1) {
+        // Move to sprout stage - dari 6 menjadi 4!
+        setGameStage(2)
+        setNailongMessage("Wow! Ada akar mawar! Tanahnya jadi subur! 🌹")
+      } else if (newWaterLevel === 6 && gameStage === 2) {
+        // Move to bud stage - dari 9 menjadi 6!
+        setGameStage(3)
+        setNailongMessage("Asik! Ada batang mawar! Tinggal sedikit lagi! 🌹")
+      } else if (newWaterLevel === 8 && gameStage === 3) {
+        // Move to bloom stage - dari 12 menjadi 8!
+        setGameStage(4)
+        setNailongMessage("Tadaaa! Mawarnya mekar sempurna! Tanahnya jadi indah! 🌹💕")
+        
+        // Show confetti effect
+        createConfetti()
+        
+        // Show ending after a delay
+        setTimeout(() => {
+          setShowEnding(true)
+        }, 3000)
+      } else {
+        // Just successful watering dengan pesan positif
+        const messages = [
+          "Mantap! Tanahnya jadi subur! 🔥",
+          "Hebat! Terus rawat bunganya! 💪", 
+          "Perfect! Tanah terbaik! ⭐",
+          "Awesome! Kamu ahli berkebun! 🏆",
+          "Sempurna! Bunga siap mekar! ✨"
+        ]
+        const randomMessage = messages[Math.floor(Math.random() * messages.length)]
+        setNailongMessage(randomMessage)
+      }
+    } else {
+      // Failed - tapi tetap sangat friendly
+      if (waterProgress < 10) {
+        setNailongMessage("Terlalu cepet! Tapi gapapa, coba lagi ya! 😊")
+      } else {
+        setNailongMessage("Kelewat sedikit! Yakin, kamu pasti bisa! 🎯")
+      }
+    }
+    
+    // Reset progress
+    setWaterProgress(0)
+  }
+  
+  const createConfetti = () => {
+    // Enhanced confetti effect with different shapes and colors
+    const colors = ['#FF5252', '#FF9800', '#FFEB3B', '#4CAF50', '#2196F3', '#9C27B0', '#E91E63', '#00BCD4']
+    const shapes = ['confetti', 'confetti circle', 'confetti star', 'confetti square']
+    const confettiCount = 80
+    
+    for (let i = 0; i < confettiCount; i++) {
+      setTimeout(() => {
+        const confetti = document.createElement('div')
+        const randomShape = shapes[Math.floor(Math.random() * shapes.length)]
+        confetti.className = randomShape
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]
+        confetti.style.left = `${Math.random() * 100}%`
+        confetti.style.top = '40%'
+        confetti.style.animationDelay = `${Math.random() * 0.5}s`
+        
+        document.querySelector('.game-container')?.appendChild(confetti)
+        
+        setTimeout(() => {
+          confetti.remove()
+        }, 4000)
+      }, i * 20)
+    }
+  }
+  
+  const handleButtonClick = (text: string) => {
+    navigator.clipboard.writeText(text)
+    setNotification(`Teks "${text}" disalin!`)
+    setTimeout(() => setNotification(""), 2000)
+  }
+  
+  const renderPlantStage = () => {
+    switch (gameStage) {
+      case 1:
+        return (
+          <div className="plant-seed active" style={{animation: 'seed-entrance 0.6s ease-out forwards, seed-magical-float 4s ease-in-out 0.6s infinite'}}>
+            <div className="seed-icon">🌰</div>
+          </div>
+        )
+      case 2:
+        return (
+          <div className="plant-sprout active" style={{animation: 'sprout-entrance 0.8s ease-out forwards, sprout-mystic-sway 5s ease-in-out 0.3s infinite'}}>
+            <div className="sprout-icon">🌱</div>
+          </div>
+        )
+      case 3:
+        return (
+          <div className="plant-bud active" style={{animation: 'bud-entrance 1s ease-out forwards, bud-glowing-pulse 3.5s ease-in-out 0.6s infinite'}}>
+            <div className="rose-icon-medium">🥀</div>
+          </div>
+        )
+      case 4:
+        return (
+          <div className="plant-bloom active" style={{animation: 'bloom-entrance 1.2s ease-out forwards, bloom-ethereal-shimmer 6s ease-in-out 0.9s infinite'}}>
+            <div className="rose-icon-bloom">🌹</div>
+          </div>
+        )
+      default:
+        // No plant at the beginning - show empty pot
+        return null
+    }
+  }
+
+  const getEmotionEmoji = () => {
+    switch (gameStage) {
+      case 0: return "😢"
+      case 1: return "🤔"
+      case 2: return "😊"
+      case 3: return "😄"
+      case 4: return "🥰"
+      default: return "😢"
+    }
+  }
+
+  const renderNailongCharacters = () => {
+    const positions = [
+      { top: "10%", left: "5%", size: 100, zIndex: 15, rotation: -15 },
+      { top: "15%", right: "8%", size: 90, zIndex: 14, rotation: 20 },
+      { top: "70%", left: "3%", size: 95, zIndex: 13, rotation: -10 },
+      { top: "75%", right: "5%", size: 85, zIndex: 12, rotation: 15 },
+      { top: "40%", left: "2%", size: 110, zIndex: 16, rotation: -5 },
+      { top: "5%", right: "15%", size: 80, zIndex: 11, rotation: 25 },
+      { top: "85%", left: "15%", size: 75, zIndex: 10, rotation: -20 },
+    ]
+    
+    return positions.map((pos, index) => (
+      <div
+        key={index}
+        className="floating-nailong"
+        style={{
+          position: 'absolute',
+          top: pos.top,
+          left: pos.left,
+          right: pos.right,
+          width: `${pos.size}px`,
+          height: `${pos.size}px`,
+          zIndex: pos.zIndex,
+          transform: `rotate(${pos.rotation}deg)`,
+          animation: `float-${index} ${3 + index * 0.3}s ease-in-out infinite`,
+        }}
+      >
+        <img 
+          src="/assets/nailong-no-bg.png" 
+          alt="Nailong" 
+          className="floating-character"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+      </div>
+    ))
+  }
+
+  const renderProgressDots = () => {
+    const dots = []
+    const totalStages = 4
+    for (let i = 0; i < totalStages; i++) {
+      dots.push(
+        <div 
+          key={i} 
+          className={`progress-dot ${gameStage > i ? 'active' : ''}`}
+        />
+      )
+    }
+    return dots
+  }
+
+  return (
+    <div className="game-container">
+      {renderNailongCharacters()}
+      
+      <div className="game-background">
+        <div className="game-header">
+          <h1 className="game-title">Taman Nailong</h1>
+          <p className="game-subtitle">Bunga Kembang Semangat</p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        
+        <div className="game-content">
+          <div className="nailong-container">
+            <img src="/assets/nailong-no-bg.png" alt="Nailong" className="nailong-character" />
+            <div className="nailong-emotion">{getEmotionEmoji()}</div>
+          </div>
+          
+          <div className="plant-container">
+            <div className="flower-pot">
+              <div className="soil-media" id="soilMedia"></div>
+            </div>
+            <div className="plant-stage">
+              {renderPlantStage()}
+            </div>
+          </div>
+          
+          <div className="message-container">
+            <p className="nailong-message">{nailongMessage}</p>
+          </div>
+          <div className="water-progress-indicator">
+            {renderProgressDots()}
+          </div>
+          
+          {gameStage < 4 && (
+            <div className="water-button-container">
+              <button 
+                className={`water-button ${isWatering ? 'watering' : ''}`}
+                onMouseDown={handleWaterStart}
+                onMouseUp={handleWaterEnd}
+                onTouchStart={handleWaterStart}
+                onTouchEnd={handleWaterEnd}
+              >
+                <span className="water-icon">💧</span>
+                <div className="water-splash"></div>
+              </button>
+              <div className="water-progress">
+                <div className="progress-container">
+                  <div className="progress-bar">
+                    <div className="progress-fill" style={{width: `${waterProgress}%`}}></div>
+                  </div>
+                  <div className="progress-zones">
+                    <div className="danger-zones">
+                      <div className="danger-zone"></div>
+                      <div className="danger-zone"></div>
+                    </div>
+                    <div className="safe-zone"></div>
+                  </div>
+                </div>
+                <div className="progress-indicators">
+                  {renderProgressDots()}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      </main>
+      </div>
+      
+      {showEnding && (
+        <div className="ending-screen">
+          <div className="ending-content">
+            <h2 className="ending-title">🌹 Semangatnya Mekar Lagi! 🌹</h2>
+            <p className="ending-message">
+              Karena mawarnya udah mekar sempurna, gimana kalo kita jalan-jalan bareng? Biar makin romantis dan menggembora!
+            </p>
+            <div className="ending-buttons">
+              <button className="ending-button yes-button" onClick={() => handleButtonClick("Mau")}>
+                Mau!
+              </button>
+              <button className="ending-button rest-button" onClick={() => handleButtonClick("Mau istirahat")}>
+                Mau Istirahat
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      
+      {notification && (
+        <div className="notification">
+          {notification}
+        </div>
+      )}
     </div>
-  );
+  )
 }
