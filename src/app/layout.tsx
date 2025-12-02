@@ -4,7 +4,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Taman Nailong: Bunga Kembang Semangat",
   description: "Game interaktif untuk menyenangkan hati pacar yang sedang ngambek",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
+  icons: {
+    icon: "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>",
+  },
 };
 
 export default function RootLayout({
