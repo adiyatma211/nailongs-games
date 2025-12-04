@@ -2,6 +2,7 @@
 .welcome-container {
   width: 100vw;
   height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile browsers */
   overflow: hidden;
   position: relative;
   font-family: 'Fredoka', sans-serif;
@@ -15,6 +16,7 @@
   justify-content: center;
   padding: 2rem;
   box-sizing: border-box;
+  padding-bottom: env(safe-area-inset-bottom, 2rem);
 }
 
 .welcome-content {
@@ -27,6 +29,11 @@
   width: 100%;
   z-index: 20;
   position: relative;
+  max-height: 80vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
 }
 
 .welcome-title {
@@ -71,6 +78,9 @@
   transition: all 0.3s ease;
   box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
   font-family: 'Fredoka', sans-serif;
+  margin-top: auto;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
 }
 
 .start-button:hover {
@@ -2055,6 +2065,55 @@
     height: 386px !important;
     width: 282px !important;
   }
+
+  /* Welcome Screen - iPhone 11 Pro Max */
+  .welcome-container {
+    padding: 1rem 1rem 5rem 1rem !important;
+    height: 100dvh !important;
+  }
+
+  .welcome-content {
+    padding: 1.8rem 1.5rem !important;
+    max-width: 400px !important;
+    width: 90% !important;
+    margin: 0 auto !important;
+    max-height: 70vh !important;
+    overflow-y: auto !important;
+    border-radius: 20px !important;
+    padding-bottom: 1.5rem !important;
+    position: relative !important;
+  }
+
+  .welcome-title {
+    font-size: 1.9rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.8rem !important;
+  }
+
+  .welcome-description {
+    margin-bottom: 1.2rem !important;
+  }
+
+  .welcome-description p {
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .instruction {
+    padding: 0.7rem !important;
+    font-size: 0.95rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .start-button {
+    padding: 0.7rem 2rem !important;
+    font-size: 1.1rem !important;
+    margin-top: 0.5rem !important;
+    position: relative !important;
+    z-index: 10 !important;
+    margin-bottom: 0.5rem !important;
+  }
 }
 
 /* iPhone 11 - Scaled down from Pro Max */
@@ -2086,6 +2145,89 @@
     height: 366px !important;
     width: 270px !important;
   }
+
+  /* Welcome Screen - iPhone 11 & iPhone X */
+  .welcome-content {
+    padding: 2rem 1.5rem !important;
+    max-width: 380px !important;
+    width: 92% !important;
+    margin: 1rem auto !important;
+    max-height: 83vh !important;
+    overflow-y: auto !important;
+    border-radius: 16px !important;
+  }
+
+  .welcome-title {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .welcome-description {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .welcome-description p {
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 0.7rem !important;
+  }
+
+  .instruction {
+    padding: 0.75rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  .start-button {
+    padding: 0.8rem 1.9rem !important;
+    font-size: 1.1rem !important;
+    margin-top: 0.5rem !important;
+  }
+}
+
+/* iPhone X Specific Fix */
+@media only screen
+  and (device-width: 375px)
+  and (device-height: 812px)
+  and (-webkit-device-pixel-ratio: 3) {
+  
+  /* iPhone X has same dimensions as iPhone 11, use same styles */
+  .welcome-content {
+    padding: 2rem 1.5rem !important;
+    max-width: 380px !important;
+    width: 92% !important;
+    margin: 1rem auto !important;
+    max-height: 83vh !important;
+    overflow-y: auto !important;
+    border-radius: 16px !important;
+  }
+
+  .welcome-title {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .welcome-description {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .welcome-description p {
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 0.7rem !important;
+  }
+
+  .instruction {
+    padding: 0.75rem !important;
+    font-size: 0.9rem !important;
+  }
+
+  .start-button {
+    padding: 0.8rem 1.9rem !important;
+    font-size: 1.1rem !important;
+    margin-top: 0.5rem !important;
+  }
 }
 
 /* iPhone XR & XS Max - Slightly smaller than Pro Max */
@@ -2111,6 +2253,55 @@
     left: 0 !important;
     right: 0 !important;
     transform: none !important;
+  }
+
+  /* Welcome Screen - iPhone XR & XS Max */
+  .welcome-container {
+    padding: 1rem 1rem 5rem 1rem !important;
+    height: 100dvh !important;
+  }
+
+  .welcome-content {
+    padding: 1.8rem 1.5rem !important;
+    max-width: 380px !important;
+    width: 88% !important;
+    margin: 0 auto !important;
+    max-height: 68vh !important;
+    overflow-y: auto !important;
+    border-radius: 18px !important;
+    padding-bottom: 1.5rem !important;
+    position: relative !important;
+  }
+
+  .welcome-title {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.7rem !important;
+  }
+
+  .welcome-description {
+    margin-bottom: 1.1rem !important;
+  }
+
+  .welcome-description p {
+    font-size: 0.95rem !important;
+    line-height: 1.4 !important;
+    margin-bottom: 0.4rem !important;
+  }
+
+  .instruction {
+    padding: 0.6rem !important;
+    font-size: 0.9rem !important;
+    margin-bottom: 0.9rem !important;
+  }
+
+  .start-button {
+    padding: 0.65rem 1.8rem !important;
+    font-size: 1.05rem !important;
+    margin-top: 0.5rem !important;
+    position: relative !important;
+    z-index: 10 !important;
+    margin-bottom: 0.5rem !important;
   }
 }
 

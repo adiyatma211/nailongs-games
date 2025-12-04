@@ -28,17 +28,15 @@ export default function Home() {
   const [plantType, setPlantType] = useState('mawar') // 'mawar' or 'jagung'
   const [errorMessage, setErrorMessage] = useState(false)
   
-  // Audio initialization and background music
+  // Audio initialization and background music - DISABLED
   useEffect(() => {
     initAudio()
-    if (showWelcome) {
-      playBackgroundMusic()
-    }
+    // Music is now disabled - won't play automatically
   }, [])
 
-  // Handle music for different pages
+  // Handle music for different pages - DISABLED
   useEffect(() => {
-    playBackgroundMusic()
+    // Music is now disabled - won't play automatically
   }, [showWelcome, isMuted])
 
   // Update volume when changed
@@ -454,19 +452,59 @@ export default function Home() {
   if (showWelcome) {
     return (
       <div className="welcome-container">
-        {/* Audio Elements */}
+        {/* Uncloseable Popup Message */}
+        <div style={{
+          position: 'fixed',
+          top: '0',
+          left: '0',
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'rgba(0, 0, 0, 0.9)',
+          zIndex: '9999',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          flexDirection: 'column'
+        }}>
+          <div style={{
+            backgroundColor: '#fff',
+            padding: '2rem',
+            borderRadius: '20px',
+            textAlign: 'center',
+            maxWidth: '90%',
+            width: '400px',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.3)'
+          }}>
+            <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#ff4757' }}>
+              Games nya Lagi Di Matiin
+            </h2>
+            <p style={{ fontSize: '1rem', marginBottom: '1.5rem', color: '#333' }}>
+              Wa Haris untuk menyalakan
+            </p>
+            <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>
+              🚫❌🚫
+            </div>
+            <p style={{ fontSize: '0.9rem', color: '#666' }}>
+              Popup ini tidak bisa ditutup
+            </p>
+          </div>
+        </div>
+
+        {/* Audio Elements - DISABLED */}
         <audio
           ref={backgroundMusicRef}
           src="/music/bgm-music.mp3"
           preload="auto"
           loop
+          muted={true}
         />
 
-        {/* Audio Controls */}
+        {/* Audio Controls - DISABLED */}
         <button
           className="audio-toggle"
           onClick={toggleMute}
           aria-label="Toggle music"
+          style={{ display: 'none' }}
         >
           {isMuted ? '🔇' : '🔊'}
         </button>
@@ -481,6 +519,8 @@ export default function Home() {
           <button
             className="start-button"
             onClick={() => setShowWelcome(false)}
+            disabled={true}
+            style={{ cursor: 'not-allowed', opacity: '0.5' }}
           >
             🌱 Mulai Bermain
           </button>
@@ -492,19 +532,21 @@ export default function Home() {
 
   return (
     <div className="game-container">
-      {/* Audio Elements for Game */}
+      {/* Audio Elements for Game - DISABLED */}
       <audio
         ref={backgroundMusicRef}
         src="/music/bgm-music.mp3"
         preload="auto"
         loop
+        muted={true}
       />
 
-      {/* Audio Controls */}
+      {/* Audio Controls - DISABLED */}
       <button
         className="audio-toggle-game"
         onClick={toggleMute}
         aria-label="Toggle music"
+        style={{ display: 'none' }}
       >
         {isMuted ? '🔇' : '🔊'}
       </button>
