@@ -9,12 +9,20 @@
 
 html, body {
   height: 100%;
+  width: 100%;
   font-family: 'Fredoka', cursive;
   overflow: hidden;
+  margin: 0;
+  padding: 0;
   user-select: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 /* Prevent text selection and tap highlights */

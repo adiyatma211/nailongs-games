@@ -46,6 +46,16 @@ export default function Home() {
     if (backgroundMusicRef.current) backgroundMusicRef.current.volume = volume
   }, [volume])
 
+  // Browser detection for Safari vs others
+  useEffect(() => {
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+    if (isSafari) {
+      document.body.classList.add('safari-browser')
+    } else {
+      document.body.classList.add('non-safari-browser')
+    }
+  }, [])
+
   // Watering mechanic: Press and hold
   useEffect(() => {
     if (isWatering) {
