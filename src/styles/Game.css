@@ -157,13 +157,20 @@
 /* Main Game Container */
 .game-container {
   width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
   position: relative;
   font-family: 'Fredoka', sans-serif;
-  overscroll-behavior: none;
+  overscroll-behavior-y: auto;
   -webkit-overflow-scrolling: touch;
+  padding-bottom: env(safe-area-inset-bottom, 2rem);
+  box-sizing: border-box;
 }
+
+/* Removed aggressive padding fixes - now using scroll approach */
+
+
 
 /* Game Background - Enhanced dengan pattern */
 .game-background {
@@ -556,6 +563,8 @@
   flex-direction: column;
   align-items: center;
   margin-top: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: calc(env(safe-area-inset-bottom, 1rem) + 2rem);
 }
 
 .water-button {
@@ -682,6 +691,7 @@
   width: 100%;
   position: relative;
   margin-bottom: 1rem;
+  padding-bottom: calc(env(safe-area-inset-bottom, 0rem) + 1rem);
 }
 
 .progress-container {
@@ -1485,6 +1495,7 @@
   .water-button-container {
     margin-top: 0.3rem;
     margin-bottom: 0.8rem;
+    padding-bottom: calc(env(safe-area-inset-bottom, 1rem) + 2rem);
   }
   
   .water-button {
@@ -1565,6 +1576,8 @@
     -webkit-overflow-scrolling: touch;
     width: 100vw !important;
     max-width: 100vw !important;
+    padding-bottom: env(safe-area-inset-bottom, 1rem);
+    box-sizing: border-box;
   }
 
   .game-background {
@@ -1641,6 +1654,7 @@
   .water-button-container {
     margin-top: 0rem;
     margin-bottom: 0.4rem;
+    padding-bottom: calc(env(safe-area-inset-bottom, 1rem) + 2rem);
     flex-shrink: 0;
   }
 
@@ -1695,6 +1709,8 @@
     -webkit-overflow-scrolling: touch;
     width: 100vw !important;
     max-width: 100vw !important;
+    padding-bottom: env(safe-area-inset-bottom, 1rem);
+    box-sizing: border-box;
   }
 
   .game-background {
@@ -1758,6 +1774,7 @@
   .water-button-container {
     margin-top: 0rem;
     margin-bottom: 0.5rem;
+    padding-bottom: calc(env(safe-area-inset-bottom, 1rem) + 2rem);
     flex-shrink: 0;
   }
 
@@ -1806,6 +1823,8 @@
     -webkit-overflow-scrolling: touch;
     width: 100vw !important;
     max-width: 100vw !important;
+    padding-bottom: env(safe-area-inset-bottom, 1rem);
+    box-sizing: border-box;
   }
 
   .game-background {
@@ -1877,6 +1896,7 @@
   .water-button-container {
     margin-top: 0rem;
     margin-bottom: 0.5rem;
+    padding-bottom: calc(env(safe-area-inset-bottom, 1rem) + 2rem);
     flex-shrink: 0;
   }
 
@@ -1922,6 +1942,7 @@
   .water-button-container {
     margin-top: 0rem;
     margin-bottom: 1rem;
+    padding-bottom: calc(env(safe-area-inset-bottom, 1rem) + 2rem);
   }
   
   .nailong-container {
@@ -2574,6 +2595,8 @@
     width: 100vw !important;
     max-width: 384px !important;
     overflow-x: hidden !important;
+    padding-bottom: env(safe-area-inset-bottom, 1rem) !important;
+    box-sizing: border-box !important;
   }
 
   .game-background {
@@ -2650,6 +2673,7 @@
   .water-button-container {
     margin-top: 0rem !important;
     margin-bottom: 0.3rem !important;
+    padding-bottom: calc(env(safe-area-inset-bottom, 1rem) + 2.5rem) !important;
   }
 
   /* Adjust floating nailong characters */
@@ -2865,5 +2889,257 @@
   
   .name-submit-button {
     font-size: 1.1rem;
+  }
+}
+
+/* iPhone 13 Series Fix - 13, 13 Pro, 13 Pro Max */
+@media only screen 
+  and (device-width: 390px) 
+  and (device-height: 844px) 
+  and (-webkit-device-pixel-ratio: 3) {
+  
+  html, body {
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .game-container {
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    padding-bottom: env(safe-area-inset-bottom, 2rem) !important;
+    box-sizing: border-box !important;
+    height: 100dvh !important;
+  }
+
+  .game-background {
+    padding: 0.8rem !important;
+    justify-content: flex-start;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    width: 100% !important;
+  }
+
+  .game-content {
+    width: 95% !important;
+    max-width: 380px !important;
+    padding: 1.2rem !important;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: auto;
+    max-height: calc(100vh - 150px) !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .water-button-container {
+    margin-top: 0rem !important;
+    margin-bottom: 1rem !important;
+    padding-bottom: calc(env(safe-area-inset-bottom, 2rem) + 2.5rem) !important;
+    flex-shrink: 0;
+  }
+
+  .water-button {
+    width: 65px !important;
+    height: 65px !important;
+    margin-bottom: 0.8rem !important;
+  }
+  
+  .water-progress {
+    margin-bottom: 1rem !important;
+    padding-bottom: calc(env(safe-area-inset-bottom, 1rem) + 40px) !important;
+  }
+}
+
+/* iPhone 13 Pro Max Fix */
+@media only screen 
+  and (device-width: 428px) 
+  and (device-height: 926px) 
+  and (-webkit-device-pixel-ratio: 3) {
+  
+  html, body {
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .game-container {
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    padding-bottom: env(safe-area-inset-bottom, 2rem) !important;
+    box-sizing: border-box !important;
+    height: 100dvh !important;
+  }
+
+  .game-background {
+    padding: 0.8rem !important;
+    justify-content: flex-start;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    width: 100% !important;
+  }
+
+  .game-content {
+    width: 95% !important;
+    max-width: 400px !important;
+    padding: 1.2rem !important;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: auto;
+    max-height: calc(100vh - 150px) !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .water-button-container {
+    margin-top: 0rem !important;
+    margin-bottom: 1rem !important;
+    padding-bottom: calc(env(safe-area-inset-bottom, 2rem) + 2.5rem) !important;
+    flex-shrink: 0;
+  }
+
+  .water-button {
+    width: 70px !important;
+    height: 70px !important;
+    margin-bottom: 0.8rem !important;
+  }
+  
+  .water-progress {
+    margin-bottom: 1rem !important;
+    padding-bottom: calc(env(safe-area-inset-bottom, 1rem) + 45px) !important;
+  }
+}
+
+/* iPhone 14 Series Fix - 14, 14 Pro */
+@media only screen 
+  and (device-width: 390px) 
+  and (device-height: 844px) 
+  and (-webkit-device-pixel-ratio: 3) {
+  
+  html, body {
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .game-container {
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    padding-bottom: env(safe-area-inset-bottom, 2.5rem) !important;
+    box-sizing: border-box !important;
+    height: 100dvh !important;
+  }
+
+  .game-background {
+    padding: 0.8rem !important;
+    justify-content: flex-start;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    width: 100% !important;
+  }
+
+  .game-content {
+    width: 95% !important;
+    max-width: 380px !important;
+    padding: 1.2rem !important;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: auto;
+    max-height: calc(100vh - 150px) !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .water-button-container {
+    margin-top: 0rem !important;
+    margin-bottom: 1rem !important;
+    padding-bottom: calc(env(safe-area-inset-bottom, 2.5rem) + 4rem) !important;
+    flex-shrink: 0;
+  }
+
+  .water-button {
+    width: 65px !important;
+    height: 65px !important;
+    margin-bottom: 0.8rem !important;
+  }
+  
+  .water-progress {
+    margin-bottom: 1rem !important;
+    padding-bottom: calc(env(safe-area-inset-bottom, 1rem) + 2rem) !important;
+  }
+}
+
+/* iPhone 14 Pro Max Fix */
+@media only screen 
+  and (device-width: 430px) 
+  and (device-height: 932px) 
+  and (-webkit-device-pixel-ratio: 3) {
+  
+  html, body {
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .game-container {
+    overflow: hidden !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    width: 100vw !important;
+    max-width: 100vw !important;
+    padding-bottom: env(safe-area-inset-bottom, 2.5rem) !important;
+    box-sizing: border-box !important;
+    height: 100dvh !important;
+  }
+
+  .game-background {
+    padding: 0.8rem !important;
+    justify-content: flex-start;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    width: 100% !important;
+  }
+
+  .game-content {
+    width: 95% !important;
+    max-width: 410px !important;
+    padding: 1.2rem !important;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: auto;
+    max-height: calc(100vh - 150px) !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .water-button-container {
+    margin-top: 0rem !important;
+    margin-bottom: 1rem !important;
+    padding-bottom: calc(env(safe-area-inset-bottom, 2.5rem) + 4.5rem) !important;
+    flex-shrink: 0;
+  }
+
+  .water-button {
+    width: 70px !important;
+    height: 70px !important;
+    margin-bottom: 0.8rem !important;
+  }
+  
+  .water-progress {
+    margin-bottom: 1rem !important;
+    padding-bottom: calc(env(safe-area-inset-bottom, 1rem) + 2.5rem) !important;
   }
 }
