@@ -5,10 +5,12 @@ import '../styles/Game.css'
 
 export default function Home() {
   const [showWelcome, setShowWelcome] = useState(true)
+  const [showNameInput, setShowNameInput] = useState(true)
+  const [userName, setUserName] = useState("")
   const [gameStage, setGameStage] = useState(0) // 0: empty, 1: seed, 2: sprout, 3: bud, 4: bloom
   const [waterProgress, setWaterProgress] = useState(0)
   const [isWatering, setIsWatering] = useState(false)
-  const [nailongMessage, setNailongMessage] = useState("Aninn, bantuin Haris dong menyirami bunganya supaya mekarr gampang kok cuma perlu click gambar air dan di tahan yaa 🌹")
+  const [nailongMessage, setNailongMessage] = useState("Selamat datang! Silakan masukkan nama kamu untuk memulai petualangan! ✨")
   const [showEnding, setShowEnding] = useState(false)
   const [notification, setNotification] = useState("")
   const [waterLevel, setWaterLevel] = useState(0)
@@ -129,19 +131,19 @@ export default function Home() {
       if (newWaterLevel === 2 && gameStage === 0) {
         // Move to seed stage
         setGameStage(1)
-        setNailongMessage("Waaa, sudah siap untuk di tanam biji mawar nih 🌹")
+        setNailongMessage(`Waaa ${userName}, sudah siap untuk di tanam biji mawar nih 🌹`)
       } else if (newWaterLevel === 4 && gameStage === 1) {
         // Move to sprout stage
         setGameStage(2)
-        setNailongMessage("Wuii, Ayo lanjuti menyiram yaa sedikit lagi tumbuh akar mawar")
+        setNailongMessage(`Wuii ${userName}, Ayo lanjuti menyiram yaa sedikit lagi tumbuh akar mawar`)
       } else if (newWaterLevel === 6 && gameStage === 2) {
         // Move to bud stage
         setGameStage(3)
-        setNailongMessage("Sudah tumbuh akar mawar sedikit lagi tumbuh batangnya ayoo semangat cantik 💕")
+        setNailongMessage(`Sudah tumbuh akar mawar ${userName} sedikit lagi tumbuh batangnya ayoo semangat cantik 💕`)
       } else if (newWaterLevel === 8 && gameStage === 3) {
         // Move to bloom stage
         setGameStage(4)
-        setNailongMessage("Tadaaa! Mawarnya mekar sempurna! Tanahnya jadi indah! 🌹💕")
+        setNailongMessage(`Tadaaa ${userName}! Mawarnya mekar sempurna! Tanahnya jadi indah! 🌹💕`)
 
         // Show confetti effect
         createConfetti()
@@ -156,37 +158,37 @@ export default function Home() {
         if (gameStage === 0) {
           // Pesan untuk tahap awal (belum ada tanaman)
           messages = [
-            "Yess, tanahnya udah basah dan lembab nih kita siram lagi yaa!",
-            "Bagus! Tanahnya udah siap untuk ditanam biji mawar!",
-            "Mantap! Tanahnya makin subur nih, terus siram ya!"
+            `Yess ${userName}, tanahnya udah basah dan lembab nih kita siram lagi yaa!`,
+            `Bagus ${userName}! Tanahnya udah siap untuk ditanam biji mawar!`,
+            `Mantap ${userName}! Tanahnya makin subur nih, terus siram ya!`
           ]
         } else if (gameStage === 1) {
           // Pesan untuk tahap biji
           messages = [
-            "Hebat! Biji mawarnya udah cukup air!",
-            "Perfect! Biji mawarnya siap tumbuh!",
-            "Great! Airnya meresap dengan baik di biji mawar!"
+            `Hebat ${userName}! Biji mawarnya udah cukup air!`,
+            `Perfect ${userName}! Biji mawarnya siap tumbuh!`,
+            `Great ${userName}! Airnya meresap dengan baik di biji mawar!`
           ]
         } else if (gameStage === 2) {
           // Pesan untuk tahap akar
           messages = [
-            "Asik! Akarnya udah seger dengan air ini!",
-            "Mantap! Akarnya makin kuat dengan air yang cukup!",
-            "Nice! Airnya membantu akar tumbuh dengan baik!"
+            `Asik ${userName}! Akarnya udah seger dengan air ini!`,
+            `Mantap ${userName}! Akarnya makin kuat dengan air yang cukup!`,
+            `Nice ${userName}! Airnya membantu akar tumbuh dengan baik!`
           ]
         } else if (gameStage === 3) {
           // Pesan untuk tahap kuncup/batang
           messages = [
-            "Wow! Batangnya udah segar dengan air ini!",
-            "Awesome! Batang mawarnya siap mekar!",
-            "Amazing! Airnya membuat batang makin kuat untuk mekar!"
+            `Wow ${userName}! Batangnya udah segar dengan air ini!`,
+            `Awesome ${userName}! Batang mawarnya siap mekar!`,
+            `Amazing ${userName}! Airnya membuat batang makin kuat untuk mekar!`
           ]
         } else {
           // Pesan default
           messages = [
-            "Yess, tanahnya udah basah dan lembab nih kita siram lagi yaa!",
-            "Hebat! Terus rawat bunganya!",
-            "Perfect! Tanah terbaik!"
+            `Yess ${userName}, tanahnya udah basah dan lembab nih kita siram lagi yaa!`,
+            `Hebat ${userName}! Terus rawat bunganya!`,
+            `Perfect ${userName}! Tanah terbaik!`
           ]
         }
         const randomMessage = messages[Math.floor(Math.random() * messages.length)]
@@ -195,9 +197,9 @@ export default function Home() {
     } else {
       // Failed - tapi tetap sangat friendly
       if (waterProgress < 10) {
-        setNailongMessage("Terlalu cepet! Tapi gapapa, coba lagi ya! 😊")
+        setNailongMessage(`Terlalu cepet ${userName}! Tapi gapapa, coba lagi ya! 😊`)
       } else {
-        setNailongMessage("Kelewat sedikit! Yakin, kamu pasti bisa! 🎯")
+        setNailongMessage(`Kelewat sedikit ${userName}! Yakin, kamu pasti bisa! 🎯`)
       }
     }
     
@@ -265,23 +267,23 @@ export default function Home() {
 
   const handleMeetChoice = async (choice: 'ayo' | 'gamau') => {
     if (choice === 'ayo') {
-      try {
-        // Hit WhatsApp API endpoint
-        const response = await fetch('/api/whatsapp', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
+      // try {
+      //   // Hit WhatsApp API endpoint
+      //   const response = await fetch('/api/whatsapp', {
+      //     method: 'GET',
+      //     headers: {
+      //       'Content-Type': 'application/json',
+      //     },
+      //   })
 
-        if (response.ok) {
-          console.log('WhatsApp API triggered successfully')
-        } else {
-          console.error('Failed to trigger WhatsApp API')
-        }
-      } catch (error) {
-        console.error('Error triggering WhatsApp API:', error)
-      }
+      //   if (response.ok) {
+      //     console.log('WhatsApp API triggered successfully')
+      //   } else {
+      //     console.error('Failed to trigger WhatsApp API')
+      //   }
+      // } catch (error) {
+      //   console.error('Error triggering WhatsApp API:', error)
+      // }
 
       // User agrees to meet - show final message
       setShowMeetQuestion(false)
@@ -296,6 +298,16 @@ export default function Home() {
     }
   }
 
+  const handleNameSubmit = () => {
+    if (userName.trim() === "") {
+      setNotification("Nama tidak boleh kosong!")
+      setTimeout(() => setNotification(""), 2000)
+      return
+    }
+    setShowNameInput(false)
+    setNailongMessage(`${userName}, bantuin Nailong dong menyirami bunganya supaya mekarr gampang kok cuma perlu click gambar air dan di tahan yaa 🌹`)
+  }
+
   const resetGame = () => {
     setGameStage(0)
     setWaterLevel(0)
@@ -307,7 +319,7 @@ export default function Home() {
     setShowFinalMessage(false)
     setShowPlantAgainMessage(false)
     setErrorMessage(false)
-    setNailongMessage("Haii Anin bantuin aku dan nailong dongg, untuk menyiram bunga mawar ini caranya Anin tekan icon air dan di tahan yaa setelah itu di lepas di capsul warna ijo yaa 🌹")
+    setNailongMessage(`${userName}, bantuin aku dan nailong dongg, untuk menyiram bunga mawar ini caranya tekan icon air dan di tahan yaa setelah itu di lepas di capsul warna ijo yaa 🌹`)
   }
 
   // Audio Management Functions
@@ -449,47 +461,46 @@ export default function Home() {
     return dots
   }
 
+  if (showNameInput) {
+    return (
+      <div className="name-input-container">
+        <div className="name-input-content">
+          <h1 className="name-input-title">🌸 Selamat Datang di Taman Nailong 🌸</h1>
+          <div className="name-input-description">
+            <p>Halo! Aku Nailong, kami butuh bantuanmu untuk merawat taman mawar kami</p>
+            <p>Mawar kami sedang layu nih... Bantuin kami siram biar mawar merah mekar lagi, yuk!</p>
+          </div>
+          <div className="name-form">
+            <p className="name-label">Siapa nama kamu?</p>
+            <input
+              type="text"
+              className="name-input-field"
+              placeholder="Masukkan nama kamu..."
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleNameSubmit()}
+            />
+            <button
+              className="name-submit-button"
+              onClick={handleNameSubmit}
+            >
+              ✨ Lanjut ke Game
+            </button>
+          </div>
+          {notification && (
+            <div className="notification">
+              {notification}
+            </div>
+          )}
+        </div>
+        {renderNailongCharacters()}
+      </div>
+    )
+  }
+
   if (showWelcome) {
     return (
       <div className="welcome-container">
-        {/* Uncloseable Popup Message */}
-        <div style={{
-          position: 'fixed',
-          top: '0',
-          left: '0',
-          width: '100%',
-          height: '100%',
-          backgroundColor: 'rgba(0, 0, 0, 0.9)',
-          zIndex: '9999',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column'
-        }}>
-          <div style={{
-            backgroundColor: '#fff',
-            padding: '2rem',
-            borderRadius: '20px',
-            textAlign: 'center',
-            maxWidth: '90%',
-            width: '400px',
-            boxShadow: '0 10px 30px rgba(0,0,0,0.3)'
-          }}>
-            <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#ff4757' }}>
-              Games nya Lagi Di Matiin
-            </h2>
-            <p style={{ fontSize: '1rem', marginBottom: '1.5rem', color: '#333' }}>
-              Wa Haris untuk menyalakan
-            </p>
-            <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>
-              🚫❌🚫
-            </div>
-            <p style={{ fontSize: '0.9rem', color: '#666' }}>
-              Popup ini tidak bisa ditutup
-            </p>
-          </div>
-        </div>
-
         {/* Audio Elements - DISABLED */}
         <audio
           ref={backgroundMusicRef}
@@ -510,17 +521,15 @@ export default function Home() {
         </button>
 
         <div className="welcome-content">
-          <h1 className="welcome-title">🌸 Selamat Datang di Taman Nailong Hai Anin 🌸</h1>
+          <h1 className="welcome-title">🌸 Selamat Datang di Taman Nailong, {userName}! 🌸</h1>
           <div className="welcome-description">
-            <p>Halo! Anin Aku Nailong dan Haris, butuh bantuanmu untuk merawat taman mawar Nailong</p>
-            <p>Mawar Aku sedang layu nih... Bantuin aku siram biar mawar merah mekar lagi, yuk!</p>
+            <p>Halo {userName}! Aku Nailong, butuh bantuanmu untuk merawat taman mawar kami</p>
+            <p>Mawar kami sedang layu nih... Bantuin kami siram biar mawar merah mekar lagi, yuk!</p>
             <p className="instruction">🎮 Cara main: Tekan dan tahan tombol siram untuk menyiram tanaman</p>
           </div>
           <button
             className="start-button"
             onClick={() => setShowWelcome(false)}
-            disabled={true}
-            style={{ cursor: 'not-allowed', opacity: '0.5' }}
           >
             🌱 Mulai Bermain
           </button>
@@ -556,7 +565,7 @@ export default function Home() {
       <div className="game-background">
         <div className="game-header">
           <h1 className="game-title">Taman Nailong</h1>
-          <p className="game-subtitle">Untuk Meningkatkan Semangat Anin!!</p>
+          <p className="game-subtitle">Untuk Meningkatkan Semangat {userName}!!</p>
         </div>
         
         <div className="game-content">
@@ -674,9 +683,9 @@ export default function Home() {
             {/* Pop Up 3: Meet Question */}
             {showMeetQuestion && (
               <>
-                <h2 className="ending-title">🌹 Haris mau dong di kabarin lagi, ditelpon lagi 🌹</h2>
+                <h2 className="ending-title">🌹 Kalo gitu {userName} aku jemput ya 🌹</h2>
                 <p className="ending-message">
-                  Ayo Main lagi, ngobrol lagi kita yapping lagi kalo Anin sudah feel much better bisa Pilih "Ayo"
+                  Ayo Main lagi, ngobrol lagi kita yapping lagi kalo {userName} sudah feel much better bisa Pilih "Ayo"
                 </p>
                 <div className="ending-buttons">
                   <button className="ending-button yes-button" onClick={() => handleMeetChoice('ayo')}>
@@ -692,9 +701,9 @@ export default function Home() {
             {/* Final Message */}
             {showFinalMessage && (
               <>
-                <h2 className="ending-title">🎉 Yeyyy Ayo Kita Mainnnnn Lagii 🎉</h2>
+                <h2 className="ending-title">🎉 Horay Ayo Kita Mainnn Lagii 🎉</h2>
                 <p className="ending-message">
-                  Im Happy Really Really Happy After ini aku Telepon ya kalo sudah tidak Working Hour! 😊💕
+                  Nanti aku Telepon ya kalo sudah tidak Working Hour! 😊💕
                 </p>
                 <div className="ending-buttons">
                   <button className="ending-button restart-button" onClick={resetGame}>
